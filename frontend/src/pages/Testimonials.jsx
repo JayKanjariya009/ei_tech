@@ -54,7 +54,7 @@ function Testimonials() {
 
                         </div>
 
-                        <div className='flex-1 w-full lg:w-350 px-4 sm:px-6 lg:px-8 py-6 lg:py-10 h-auto lg:h-96 rounded items-center order-1 lg:order-2'>
+                        <div className='flex-1 w-full lg:w-60 px-4 sm:px-6 lg:px-8 py-6 lg:py-10 h-auto lg:h-96 rounded items-center order-1 lg:order-2'>
 
                             {testimonials.length > 0 ? (
                                 <Swiper

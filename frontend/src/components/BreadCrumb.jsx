@@ -19,37 +19,26 @@ function Breadcrumb() {
 
 
 
-                <div className="flex gap-5 mt-10">
-
-
+                <div className="flex items-center gap-2 sm:gap-3 mt-10">
                     {/* Always show Home */}
-                    <div>
-                        <h2 className="text-white  text-lg sm:text-2xl lg:text-3xl text-center font-semibold">
+                    <Link to="/" className="text-white text-lg sm:text-2xl lg:text-3xl font-semibold hover:text-gray-200">
+                        Home
+                    </Link>
 
-                            <Link to="/">Home</Link>
-
-                        </h2>
-
-                    </div>
-
-                    {/* Show current page */}
-                    <div >
-                        {pathArray.map((page, index) => (
-                            <span key={index} className="gap-2 sm:gap-5 capitalize flex text-white text-lg sm:text-2xl lg:text-3xl text-center font-semibold">
-                                {" > "}
-
-                                <h2 className="text-white text-lg sm:text-2xl lg:text-3xl text-center font-semibold">
-                                    <Link to={`/${page}`}>
-                                        {page.replace("-", " ")}
-                                    </Link>
-                                </h2>
+                    {/* Show breadcrumb path */}
+                    {pathArray.map((page, index) => (
+                        <div key={index} className="flex items-center gap-2 sm:gap-3">
+                            <span className="text-white text-lg sm:text-2xl lg:text-3xl font-semibold">
+                                &gt;
                             </span>
-                        ))}
-                    </div>
-
-
-
-
+                            <Link 
+                                to={`/${pathArray.slice(0, index + 1).join('/')}`} 
+                                className="text-white text-lg sm:text-2xl lg:text-3xl font-semibold capitalize hover:text-gray-200"
+                            >
+                                {page.replace("-", " ")}
+                            </Link>
+                        </div>
+                    ))}
                 </div>
 
             </div>
