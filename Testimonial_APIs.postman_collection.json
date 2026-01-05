@@ -1,0 +1,279 @@
+{
+	"info": {
+		"name": "Testimonial APIs",
+		"description": "Collection for testing testimonial endpoints with image support",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "your_jwt_token_here",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "login"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Get All Testimonials (Public)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/testimonials",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "testimonials"]
+				},
+				"description": "Get all approved testimonials for public display"
+			}
+		},
+		{
+			"name": "Get All Testimonials (Admin)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/testimonials/admin/all",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "testimonials", "admin", "all"]
+				},
+				"description": "Get all testimonials (approved and pending) for admin"
+			}
+		},
+		{
+			"name": "Get Single Testimonial",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/testimonials/1",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "testimonials", "1"]
+				},
+				"description": "Get a specific testimonial by ID"
+			}
+		},
+		{
+			"name": "Add Testimonial (with images)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_name",
+							"value": "John Doe",
+							"type": "text"
+						},
+						{
+							"key": "user_email",
+							"value": "john@example.com",
+							"type": "text"
+						},
+						{
+							"key": "message",
+							"value": "Excellent service! Highly recommended.",
+							"type": "text"
+						},
+						{
+							"key": "rating",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/testimonials",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "testimonials"]
+				},
+				"description": "Add new testimonial with optional images (up to 5)"
+			}
+		},
+		{
+			"name": "Add Testimonial (without images)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_name",
+							"value": "Jane Smith",
+							"type": "text"
+						},
+						{
+							"key": "user_email",
+							"value": "jane@example.com",
+							"type": "text"
+						},
+						{
+							"key": "message",
+							"value": "Great experience working with this team!",
+							"type": "text"
+						},
+						{
+							"key": "rating",
+							"value": "4",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/testimonials",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "testimonials"]
+				},
+				"description": "Add new testimonial without images"
+			}
+		},
+		{
+			"name": "Update Testimonial (with new images)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "message",
+							"value": "Updated testimonial message with even better feedback!",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/testimonials/1",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "testimonials", "1"]
+				},
+				"description": "Update testimonial with new images (replaces existing images)"
+			}
+		},
+		{
+			"name": "Update Testimonial (message only)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "message",
+							"value": "Updated testimonial message only",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/testimonials/1",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "testimonials", "1"]
+				},
+				"description": "Update only the message, keep existing images"
+			}
+		},
+		{
+			"name": "Approve Testimonial",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/testimonials/1/approve",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "testimonials", "1", "approve"]
+				},
+				"description": "Approve a pending testimonial"
+			}
+		},
+		{
+			"name": "Delete Testimonial",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/testimonials/1",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "testimonials", "1"]
+				},
+				"description": "Delete testimonial and associated images"
+			}
+		}
+	]
+}
